@@ -51,19 +51,25 @@ class SendBySMS_Settings {
 	public static function get_settings() {
 
 		$settings = array(
-			'section_title' => array(
+			'section_title'            => array(
 				'name' => __( 'Authentication', 'sendbysms' ),
 				'type' => 'title',
 				'desc' => '',
 				'id'   => 'wc_settings_tab_sendbysms_authentication_title'
 			),
-			'apitoken'      => array(
+			'apitoken'                 => array(
 				'name' => __( 'API Token', 'sendbysms' ),
 				'type' => 'password',
 				'desc' => sprintf( __( 'You can find the token in %1$syour SendBySMS account%2$s.', 'sendbysms' ), '<a href="https://dashboard.sendbysms.app/developers" target="_blank">', '</a>' ),
 				'id'   => 'wc_settings_tab_sendbysms_token'
 			),
-			'section_end'   => array(
+			'message_payment_complete' => array(
+				'name' => __( 'Payment complete message', 'sendbysms' ),
+				'type' => 'textarea',
+				'desc' => __( 'The message to be sent to the customer when the payment is completed', 'sendbysms' ),
+				'id'   => 'sendbysms_message_payment_complete',
+			),
+			'section_end'              => array(
 				'type' => 'sectionend',
 				'id'   => 'wc_settings_tab_sendbysms_section_end'
 			)

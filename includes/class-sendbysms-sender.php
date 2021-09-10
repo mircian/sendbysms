@@ -94,10 +94,11 @@ class SendBySMS_Sender {
 		$url     = trailingslashit( $this->get_api_url() ) . 'sms/send';
 		$headers = [
 			'Authorization' => 'Bearer ' . $this->get_api_token(),
+			'Accept' => 'application/json',
 		];
 		$args    = [
 			'headers'  => $headers,
-			'blocking' => apply_filters( 'sendbysms_debug', false ),
+			'blocking' => apply_filters( 'sendbysms_debug', true ),
 			'body'     => [
 				'recipient' => $recipient,
 				'sender_id' => $this->get_sender_id(),
@@ -105,7 +106,7 @@ class SendBySMS_Sender {
 			],
 		];
 
-		wp_remote_post( $url, $args );
+		$sent = wp_remote_post( $url, $args );
 
 	}
 

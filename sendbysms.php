@@ -31,6 +31,7 @@ class SendBySMS {
 
 		require_once $plugin_path . '/includes/class-sendbysms-settings.php';
 		require_once $plugin_path . '/includes/class-sendbysms-sender.php';
+		require_once $plugin_path . '/includes/class-sendbysms-messages.php';
 		require_once $plugin_path . '/includes/class-sendbysms-orders.php';
 	}
 
