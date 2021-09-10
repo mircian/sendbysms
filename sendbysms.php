@@ -30,6 +30,7 @@ class SendBySMS {
 		$plugin_path = plugin_dir_path( SEND_BY_SMS_PLUGIN_FILE );
 
 		require_once $plugin_path . '/includes/class-sendbysms-settings.php';
+		require_once $plugin_path . '/includes/class-sendbysms-sender.php';
 	}
 
 }
