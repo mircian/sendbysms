@@ -40,7 +40,8 @@ class SendBySMS_Sender {
 	/**
 	 * Constructor - does nothing for now.
 	 */
-	public function __construct() {}
+	public function __construct() {
+	}
 
 	/**
 	 * Get the base API url.
@@ -95,8 +96,9 @@ class SendBySMS_Sender {
 			'Authorization' => 'Bearer ' . $this->get_api_token(),
 		];
 		$args    = [
-			'headers' => $headers,
-			'body'    => [
+			'headers'  => $headers,
+			'blocking' => apply_filters( 'sendbysms_debug', false ),
+			'body'     => [
 				'recipient' => $recipient,
 				'sender_id' => $this->get_sender_id(),
 				'message'   => $message,
