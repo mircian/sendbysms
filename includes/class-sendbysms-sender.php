@@ -77,7 +77,7 @@ class SendBySMS_Sender {
 	public function get_sender_id() {
 
 		if ( ! isset( $this->sender_id ) ) {
-			$this->sender_id = apply_filters( 'sendbysms_sender_id', get_bloginfo( 'name' ) );
+			$this->sender_id = apply_filters( 'sendbysms_sender_id', 'SendBySMS' );
 		}
 
 		return $this->sender_id;
@@ -91,6 +91,8 @@ class SendBySMS_Sender {
 	 */
 	public function send_sms( $recipient, $message ) {
 
+		$is_debug = apply_filters( 'sendbysms_debug', false );
+
 		$url     = trailingslashit( $this->get_api_url() ) . 'sms/send';
 		$headers = [
 			'Authorization' => 'Bearer ' . $this->get_api_token(),
@@ -98,15 +100,20 @@ class SendBySMS_Sender {
 		];
 		$args    = [
 			'headers'  => $headers,
-			'blocking' => apply_filters( 'sendbysms_debug', true ),
-			'body'     => [
+			'blocking' => $is_debug,
+			'body'     => wp_json_encode([
 				'recipient' => $recipient,
 				'sender_id' => $this->get_sender_id(),
 				'message'   => $message,
-			],
+			]),
+			'data_format' => 'body',
 		];
 
 		$sent = wp_remote_post( $url, $args );
+
+		if ( $is_debug ) {
+			error_log( wp_remote_retrieve_body( $sent ) );
+		}
 
 	}
 
