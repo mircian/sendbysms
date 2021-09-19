@@ -97,6 +97,8 @@ class SendBySMS_Sender {
 		$headers = [
 			'Authorization' => 'Bearer ' . $this->get_api_token(),
 			'Accept' => 'application/json',
+			'Content-Type' => 'application/json',
+			'Referer' => '',
 		];
 		$args    = [
 			'headers'  => $headers,
