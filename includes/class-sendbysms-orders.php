@@ -33,10 +33,17 @@ class SendBySMS_Orders {
 		// TODO: Add meta to order to make sure we don't send the same SMS 2 times.
 		if ( $is_bacs_check && $is_bacs_check_status ) {
 			$this->send_payment_complete_message( $order_id );
+			return;
 		}
 		// 2. For Cash on delivery payments
 		if ( 'cod' === $order->get_payment_method() && 'completed' === $new_status ) {
 			$this->send_payment_complete_message( $order_id );
+			return;
+		}
+
+		if ( 'completed' === $new_status ) {
+			// For all other gateways send the order completed message.
+			$this->send_order_complete_message( $order_id );
 		}
 	}
 
@@ -56,6 +63,27 @@ class SendBySMS_Orders {
 
 		if ( ! empty( $order_phone ) ) {
 			$message_content = SendBySMS_Messages::instance()->get_message_content( 'order_processing', $order );
+			SendBySMS_Sender::instance()->send_sms( $order_phone, $message_content );
+		}
+
+	}
+
+	/**
+	 * Send a sms message when the order is paid.
+	 *
+	 * @param int $order_id The order id.
+	 */
+	public function send_order_complete_message( $order_id ) {
+
+		if ( ! SendBySMS_Messages::instance()->is_message_enabled( 'order_completed' ) ) {
+			return;
+		}
+
+		$order       = wc_get_order( $order_id );
+		$order_phone = $order->get_billing_phone();
+
+		if ( ! empty( $order_phone ) ) {
+			$message_content = SendBySMS_Messages::instance()->get_message_content( 'order_completed', $order );
 			SendBySMS_Sender::instance()->send_sms( $order_phone, $message_content );
 		}
 
