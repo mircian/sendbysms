@@ -11,12 +11,22 @@ class SendBySMS_Messages {
 	 */
 	protected static $_instance = null;
 
-	public $messages = [
-		'payment_complete',
-	];
+	/**
+	 * The enabled messages.
+	 *
+	 * @var array
+	 */
+	public $enabled_messages = [];
+
+	/**
+	 * The messages content.
+	 *
+	 * @var array
+	 */
+	public $messages_content = [];
 
 	public function __construct() {
-
+		$this->load_messages();
 	}
 
 	/**
@@ -36,6 +46,29 @@ class SendBySMS_Messages {
 		return self::$_instance;
 	}
 
+	public function load_messages() {
+		$enabled_messages_option = get_option( 'sendbysms_enabled_messages' );
+
+		$this->enabled_messages = [];
+		if ( ! empty( $enabled_messages_option ) && is_array( $enabled_messages_option ) ) {
+			foreach ( $enabled_messages_option as $message_id => $enabled ) {
+				if ( 'yes' === $enabled ) {
+					$this->enabled_messages[] = $message_id;
+				}
+			}
+		}
+
+		if ( ! empty( $this->enabled_messages ) ) {
+			$messages_content       = get_option( 'sendbysms_messages' );
+			$this->messages_content = [];
+			foreach ( $this->enabled_messages as $message_key ) {
+				if ( isset( $messages_content[ $message_key ] ) ) {
+					$this->messages_content[ $message_key ] = $messages_content[ $message_key ];
+				}
+			}
+		}
+	}
+
 
 	/**
 	 * Checks if the specified sms message is enabled.
@@ -46,7 +79,7 @@ class SendBySMS_Messages {
 	 */
 	public function is_message_enabled( $message ) {
 
-		$enabled_messages = apply_filters( 'sendbysms_enabled_messages', $this->messages );
+		$enabled_messages = apply_filters( 'sendbysms_enabled_messages', $this->enabled_messages );
 
 		return in_array( $message, $enabled_messages, true );
 
@@ -65,10 +98,8 @@ class SendBySMS_Messages {
 			$order = wc_get_order( $order );
 		}
 
-		$message_value = get_option( 'sendbysms_message_' . $key );
-
-		if ( ! empty ( $message_value ) ) {
-			$message = $this->replace_tags( $message_value, $order );
+		if ( $this->is_message_enabled( $key ) ) {
+			$message = $this->replace_tags( $this->messages_content[ $key ], $order );
 		}
 
 		if ( empty( $message ) ) {

@@ -63,7 +63,7 @@ class SendBySMS_Sender {
 			return SEND_BY_SMS_API_TOKEN;
 		}
 		if ( ! isset( $this->api_token ) ) {
-			$this->api_token = get_option( 'wc_settings_tab_sendbysms_token' );
+			$this->api_token = get_option( 'sendbysms_api_token' );
 		}
 
 		return $this->api_token;

@@ -47,7 +47,7 @@ class SendBySMS_Orders {
 	 */
 	public function send_payment_complete_message( $order_id ) {
 
-		if ( ! SendBySMS_Messages::instance()->is_message_enabled( 'payment_complete' ) ) {
+		if ( ! SendBySMS_Messages::instance()->is_message_enabled( 'order_processing' ) ) {
 			return;
 		}
 
@@ -55,7 +55,7 @@ class SendBySMS_Orders {
 		$order_phone = $order->get_billing_phone();
 
 		if ( ! empty( $order_phone ) ) {
-			$message_content = SendBySMS_Messages::instance()->get_message_content( 'payment_complete', $order );
+			$message_content = SendBySMS_Messages::instance()->get_message_content( 'order_processing', $order );
 			SendBySMS_Sender::instance()->send_sms( $order_phone, $message_content );
 		}
 

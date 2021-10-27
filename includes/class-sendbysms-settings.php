@@ -49,7 +49,6 @@ class SendBySMS_Settings {
 	 *
 	 */
 	public static function get_settings() {
-
 		$settings = array(
 			'section_title'            => array(
 				'name' => __( 'Authentication', 'sendbysms' ),
@@ -61,13 +60,31 @@ class SendBySMS_Settings {
 				'name' => __( 'API Token', 'sendbysms' ),
 				'type' => 'password',
 				'desc' => sprintf( __( 'You can find the token in %1$syour SendBySMS account%2$s.', 'sendbysms' ), '<a href="https://dashboard.sendbysms.app/developers" target="_blank">', '</a>' ),
-				'id'   => 'wc_settings_tab_sendbysms_token'
+				'id'   => 'sendbysms_api_token'
 			),
-			'message_payment_complete' => array(
+			'enable_order_processing'  => array(
+				'desc'   => __( 'Send Payment Complete SMS', 'sendbysms' ),
+				'type'    => 'checkbox',
+				'id'    => 'sendbysms_enabled_messages[order_processing]',
+				'default' => 'yes',
+			),
+			'message_order_processing' => array(
 				'name' => __( 'Payment complete message', 'sendbysms' ),
 				'type' => 'textarea',
-				'desc' => __( 'The message to be sent to the customer when the payment is completed', 'sendbysms' ),
-				'id'   => 'sendbysms_message_payment_complete',
+				'desc' => __( 'The message to be sent to the customer when the payment is completed (order is processing).', 'sendbysms' ),
+				'id'   => 'sendbysms_messages[order_processing]',
+			),
+			'enable_order_completed'  => array(
+				'desc'   => __( 'Send Order Completed SMS', 'sendbysms' ),
+				'type'    => 'checkbox',
+				'id'    => 'sendbysms_enabled_messages[order_completed]',
+				'default' => 'yes',
+			),
+			'message_order_completed'  => array(
+				'name' => __( 'Order completed message', 'sendbysms' ),
+				'type' => 'textarea',
+				'desc' => __( 'The message to be sent to the customer when the order is marked as completed.', 'sendbysms' ),
+				'id'   => 'sendbysms_messages[order_completed]',
 			),
 			'section_end'              => array(
 				'type' => 'sectionend',
