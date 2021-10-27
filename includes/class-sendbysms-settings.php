@@ -63,28 +63,30 @@ class SendBySMS_Settings {
 				'id'   => 'sendbysms_api_token'
 			),
 			'enable_order_processing'  => array(
-				'desc'   => __( 'Send Payment Complete SMS', 'sendbysms' ),
+				'desc'    => __( 'Send Payment Complete SMS', 'sendbysms' ),
 				'type'    => 'checkbox',
-				'id'    => 'sendbysms_enabled_messages[order_processing]',
+				'id'      => 'sendbysms_enabled_messages[order_processing]',
 				'default' => 'yes',
 			),
 			'message_order_processing' => array(
-				'name' => __( 'Payment complete message', 'sendbysms' ),
-				'type' => 'textarea',
-				'desc' => __( 'The message to be sent to the customer when the payment is completed (order is processing).', 'sendbysms' ),
-				'id'   => 'sendbysms_messages[order_processing]',
+				'name'    => __( 'Payment complete message', 'sendbysms' ),
+				'type'    => 'textarea',
+				'desc'    => __( 'The message to be sent to the customer when the payment is completed (order is processing).', 'sendbysms' ),
+				'id'      => 'sendbysms_messages[order_processing]',
+				'default' => 'We received your order #[order_id] with a total of [order_total] and we\'ll let you know when it\'s ready for delivery',
 			),
-			'enable_order_completed'  => array(
-				'desc'   => __( 'Send Order Completed SMS', 'sendbysms' ),
+			'enable_order_completed'   => array(
+				'desc'    => __( 'Send Order Completed SMS', 'sendbysms' ),
 				'type'    => 'checkbox',
-				'id'    => 'sendbysms_enabled_messages[order_completed]',
+				'id'      => 'sendbysms_enabled_messages[order_completed]',
 				'default' => 'yes',
 			),
 			'message_order_completed'  => array(
-				'name' => __( 'Order completed message', 'sendbysms' ),
-				'type' => 'textarea',
-				'desc' => __( 'The message to be sent to the customer when the order is marked as completed.', 'sendbysms' ),
-				'id'   => 'sendbysms_messages[order_completed]',
+				'name'    => __( 'Order completed message', 'sendbysms' ),
+				'type'    => 'textarea',
+				'desc'    => __( 'The message to be sent to the customer when the order is marked as completed.', 'sendbysms' ),
+				'id'      => 'sendbysms_messages[order_completed]',
+				'default' => 'The order #[order_id] is now on its way to you via [shipping_method]',
 			),
 			'section_end'              => array(
 				'type' => 'sectionend',
